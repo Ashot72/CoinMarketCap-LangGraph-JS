@@ -1,0 +1,432 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{color:#0563C1;
+	text-decoration:underline;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:107%;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link="#0563C1" vlink="#954F72" style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:20.0pt;line-height:107%'>CoinMarketCap LangGraph JS</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Video Link: <a
+href="https://youtu.be/faosBOaERnU" target="_blank">https://youtu.be/faosBOaERnU</a></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>GitHub
+Repository: <a href="https://github.com/Ashot72/CoinMarketCap-LangGraph-JS"
+target="_blank">https://github.com/Ashot72/CoinMarketCap-LangGraph-JS</a></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'><a
+href="https://langchain-ai.github.io/langgraphjs/" target="_blank">LangGraph.js</a>
+is a library for building stateful, multi-actor applications with LLMs, used to
+create agent and multi-agent workflows. Compared to other</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>LLM frameworks,
+it offers these core benefits; cycles, controllability, and persistence.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>I have
+created an application where you can ask questions about cryptocurrencies to an
+LLM and receive replies. You can even purchase them (which will be discussed).</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=532 height=479 id="Picture 1"
+src="doc_files/image001.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 1</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>This is the
+LangGraph workflow we created.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1219 height=433 id="Picture 2"
+src="doc_files/image002.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 2</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>We define
+the state of our application using annotations, which is the recommended way to
+define the graph state for <i>StateGraph</i> graphs. We have also </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>specified
+our own properties, <i>requestedCryptoPurchaseDetails</i> and <i>purchaseConfirmed</i>.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1242 height=442 id="Picture 3"
+src="doc_files/image003.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 3</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>If we hover
+over the <i>MessageAnnotation</i>, we can see that the <i>reducer</i> function
+defines how new values are combined with the existing state, and the <i>default</i>
+function </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>provides an
+initial value for the channel.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1266 height=649 id="Picture 4"
+src="doc_files/image004.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 4</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>When
+constructing an agent, we need to provide a list of tools that we can use.
+While <i>LangChain</i> includes some prebuilt tools, it is often more useful to
+use tools that implement </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>custom
+logic. In our app, we use the built-in Tavily Search tool to search the web and
+our custom tools, which we created based on a Zod schema.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=872 height=746 id="Picture 5"
+src="doc_files/image005.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 5</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Most
+importantly, we bind the tools to our LLM.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1126 height=738 id="Picture 6"
+src="doc_files/image006.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 6</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>We built our
+custom tools based on the <i><a
+href="https://coinmarketcap.com/api/documentation/v1/#section/Authentication"
+target="_blank">CoinMarketCap</a></i> API.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1298 height=659 id="Picture 7"
+src="doc_files/image007.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 7</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>The first
+tool is the cryptocurrency info tool, where we pass the symbol, such as BTC.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1337 height=729 id="Picture 8"
+src="doc_files/image008.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 8</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>The second
+tool is the <i>cryptoQuotes</i>.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1256 height=703 id="Picture 15"
+src="doc_files/image009.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 9</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>The third
+tool is the price conversion tool, where we convert, for example, BTC to USD by
+specifying an amount.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1227 height=603 id="Picture 10"
+src="doc_files/image010.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 19</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>The Tavily
+Search tool is used to search the web. When you ask the question, w<i>hat is ethery?
+</i>by specifying an approximate cryptocurrency name, it uses the tool to
+search the web.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1317 height=473 id="Picture 11"
+src="doc_files/image011.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 20</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>In
+LangGraph, <i>nodes</i> and <i>edges</i> are key components of the framework
+used to design workflows, typically for managing tasks and interactions with
+large language models (LLMs) </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>and other
+agents. A <i>node</i> in LangGraph represents a specific computational task or
+operation, serving as the fundamental unit of work in a workflow. An <i>edge</i>
+in LangGraph </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>represents
+the connection or flow between two nodes, determining the order of execution
+and how data is passed between them.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1285 height=432 id="Picture 12"
+src="doc_files/image012.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 21</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>In
+LangGraph, conditional edges allow for dynamic routing within a graph based on
+the outcome of preceding node's operation. This enables decision-making</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>within workflows,
+where the flow of execution can change depending on certain conditions.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>In our app,
+if there is no tooling information, we <i>END</i> the flow. We call the <i>execute_purchase</i>
+node when we have the <i>requestedCryptoPurchaseDetails</i> info. </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>If the
+cryptocurrency price conversion tool is used, we call the <i>prepare_purchase_details</i>
+node; otherwise, we just call the <i>tools</i>.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1102 height=840 id="Picture 13"
+src="doc_files/image013.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 22</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>In the
+execute_purchase node if <i>purchaseConfirmed</i> state is not defined then we
+throw <i>NodeInterupt</i>.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>In
+LangGraph, a dynamic interrupt refers to a mechanism that allows the graph
+workflow to be interrupted at runtime based on certain conditions or events
+within a node's execution.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>It enables
+interruptions to occur during a node's execution when specific conditions are
+met. This is typically implemented by raising a special exception, such as <i>NodeInterrupt</i>,
+inside a node.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>This feature
+can be especially useful in human-in-the-loop (HITL) applications, where human
+intervention is required before proceeding with certain tasks. By dynamically
+interrupting the </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>workflow, we
+can pause execution, review the current state, and decide whether to resume,
+adjust the process, or terminate it.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1308 height=621 id="Picture 14"
+src="doc_files/image014.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 14</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>When the <i>Terms
+&amp; Conditions</i> is checked, the execute_<i>purchase</i> node is called,
+where we directly call the price conversion tool to get the price by passing
+the necessary </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>information
+that we have already received.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=926 height=605 id="Picture 16"
+src="doc_files/image015.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 15</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>In
+LangGraph, <i>checkpointers</i> and <i>memory savers</i> are used to manage the
+persistence of workflows and handle the recovery of</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>graph states
+across different stages of execution.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1348 height=620 id="Picture 19"
+src="doc_files/image016.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 16</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>In the
+video, you can see that when I asked the same question a second time, <i>What
+is bitcoin?</i> it served the answer directly from memory without interfering
+with the model or tooling.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1111 height=924 id="Picture 20"
+src="doc_files/image017.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 17</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>When we ask
+a question, we call the <i>/api/query</i> endpoint. We pass the question as a
+human message and get the detailed information by streaming it to display on </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>the front
+end when clicking the <i>View Stream</i> button. If there is a node
+interruption, such as when the Terms &amp; Conditions is not checked, we pass
+the </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>interrupting
+message, which can be extracted from the task.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=916 height=853 id="Picture 21"
+src="doc_files/image018.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 18</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>We set <i>thread
+Id </i>before asking a question.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>In
+LangGraph, the <i>thread ID</i> is a unique identifier used to track a specific
+interaction or conversation flow within the graph. This ID is crucial for
+maintaining the context of interactions, </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>especially
+in scenarios involving multiple user sessions or conversations. The thread ID
+helps to manage and persist the state of the conversation, enabling features
+like memory </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>retention,
+message tracking, and checkpoints.</span></p>
+
+<p class=MsoNormal><img border=0 width=1357 height=855 id="Picture 22"
+src="doc_files/image019.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 19</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>When the
+Terms &amp; Conditions is checked, the <i>/api/accept</i> endpoint is called,
+where we update the graph by setting the <i>purchaseConfirmed</i> state to true.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><i><span style='font-size:14.0pt;line-height:107%'>The
+purchase is for demo purposes, as you cannot actually buy a crypto coin from
+CoinMarketCap. In applications, usually, we allow users to perform </span></i></p>
+
+<p class=MsoNormal><i><span style='font-size:14.0pt;line-height:107%'>actions
+once they are authenticated (logged in). The Terms &amp; Conditions is a
+showcase in this application.</span></i></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1373 height=697 id="Picture 23"
+src="doc_files/image020.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 20</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>When you
+want to deploy your app to the LangGraph Server, you may use the LangGraph
+Server SDK instead. In our app, we do not intend to deploy it on the server. </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>You can read
+<a
+href="https://langchain-ai.github.io/langgraphjs/concepts/langgraph_server/#application-structure"
+target="_blank">more</a> about it.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1142 height=878 id="Picture 24"
+src="doc_files/image021.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 21</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>LangGraph
+Studio offers a new way to develop LLM applications by providing a specialized
+agent IDE that enables visualization, interaction, and debugging of complex
+agentic applications.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Currently,
+only macOS is supported. Windows and Linux support is coming soon.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1180 height=728 id="Picture 25"
+src="doc_files/image022.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 22</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><i><span style='font-size:14.0pt;line-height:107%'><a
+href="https://www.langchain.com/langsmith" target="_blank">LangSmith</a></span></i><span
+style='font-size:14.0pt;line-height:107%'> is a platform designed to assist
+with the debugging, testing, and optimization of large language model (LLM)
+applications, particularly in production environments. </span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>It provides
+tools to monitor model performance, trace execution flows, and evaluate LLM
+interactions, ensuring they operate efficiently and as expected.</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><img border=0 width=1046 height=551 id="Picture 26"
+src="doc_files/image023.png"></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>Figure 23</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'>LangSmith
+tracing is optional.</span></p>
+
+</div>
+
+</body>
+
+</html>

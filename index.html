@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CoinMarketCap LangGraph</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        #question {
+            padding: 9px;
+            width: 721px;
+            margin-bottom: 4px
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        #threadId {
+            padding: 9px;
+            margin-bottom: 4px
+        }
+
+        input[type=button],
+        input[type=submit] {
+            height: 36px;
+        }
+
+        hr {
+            margin-top: 40px;
+        }
+
+        .header {
+            text-align: center;
+            font-size: 24px;
+            padding: 13px;
+        }
+
+        #response {
+            width: 718px;
+            margin-top: 40px;
+            line-height: 23px;
+            background-color: #fbfbfb;
+            padding: 13px;
+        }
+
+        #termsDiv {
+            float: right;
+        }
+
+        #columns {
+            display: flex;
+            gap: 100px;
+        }
+
+        .title {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .picture {
+            display: flex;
+            justify-content: center;
+            margin: 6px;
+        }
+    </style>
+
+<body>
+    <div class="container">
+        <div id="columns">
+            <div>
+                <div class="header">CoinMarketCap LangGraph</div>
+                <div id="wait"></div>
+                <div>
+                    <input type="text" id="threadId" placeholder="Thread Id" />
+                    <input type="button" id="set" value="Set" />
+                    <div id="termsDiv">
+                        <input type="checkbox" id="terms" disabled /> Terms & Conditions
+                    </div>
+                </div>
+                <div>
+                    <input type="text" id="question" placeholder="Cryptocurrency Questions" />
+                </div>
+                <div>
+                    <input id="process" style="float: right" type="button" value="Process">
+                </div>
+
+                <div id="response">
+
+                </div>
+
+            </div>
+            <img src="/public/CoinMarketCap_graph.png" height="441" />
+        </div>
+    </div>
+
+    <script>
+
+        const lnToBr = (content) =>
+            content.replace(/(?:\r\n|\r|\n)/g, "<br>").replace(
+                /(<script.*>|<\/script>)/g,
+                "",
+            );
+
+        $(document).ready(function () {
+            let threadId = ""
+
+            function setThreadId(data) {
+                $("#wait").text("Wait...")
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/threadId',
+                    data,
+                    success: function (response) {
+                        threadId = response.threadId
+                        $("#wait").text("")
+                    },
+                    error: function (xhr, status, error) {
+                        $("#wait").text("")
+                        alert(error)
+                    }
+                });
+            }
+
+            function query(data) {
+                $("#wait").text("Wait...")
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/query',
+                    data,
+                    success: function (response) {
+                        debugger
+
+                        $('#response').prepend("<hr />")
+
+                        $('#response').prepend(`
+                          <form target="_blank" action="/api/stream" method="POST">
+                            <input type="hidden" name="json" id="json" value='${JSON.stringify(response.info)}' />
+                            <input style="float:right" type="submit" value="View Stream" />
+                          </form>`
+                        );
+
+                        if (response.interrupts) {
+                            $('#terms').attr('disabled', false)
+                            $('#process').attr('disabled', true)
+                        }
+
+                        if (response.interrupts) {
+                            $('#terms').attr('checked', false)
+                            $('#response').prepend(`
+                             <div class="title">${$("#question").val()}</div>
+                             <div>${response.answer} Please accept the Terms & Conditions.</div>`
+                            );
+                        } else {
+                            $('#response').prepend(`
+                            <div class="title">${$("#question").val()}</div>
+                            <div>${lnToBr(response.answer)}</div>`
+                            );
+                        }
+
+                        $("#wait").text("")
+                        $("#question").val("")
+                    },
+                    error: function (xhr, status, error) {
+                        $("#wait").text("")
+                        alert(xhr.responseText.message)
+                    }
+                });
+            }
+
+            $("#set").click(function (e) {
+                const threadId = $("#threadId").val()
+                if (!threadId) {
+                    alert("Please set a Thread Id.")
+                    return
+                }
+                setThreadId({ threadId })
+            });
+
+            $("#process").click(function (e) {
+                const question = $("#question").val()
+
+                if (!question) {
+                    alert("Please ask a question.")
+                    return
+                }
+
+                if (!threadId) {
+                    alert("Please set a Thread Id before asking a question.")
+                    return
+                }
+
+                query({ question })
+            });
+
+            $('#terms').change(function () {
+                if (this.checked) {
+
+                    function accpet(data) {
+                        $("#wait").text("Wait...")
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/accept',
+                            data,
+                            success: function (response) {
+                                $('#response').prepend("<hr />")
+
+                                $('#response').prepend(`
+                                    <form target="_blank" action="/api/stream" method="POST">
+                                        <input type="hidden" name="json" id="json" value='${JSON.stringify(response.info)}' />
+                                        <input style="float:right" type="submit" value="View Stream" />
+                                    </form>`
+                                );
+
+                                $('#response').prepend(`
+                                    <div class="title">${$("#question").val()}</div>
+                                    <div>${response.answer}</div>`
+                                );
+
+                                $("#wait").text("")
+                                $("#threadId").val("")
+
+                                $('#terms').attr('disabled', true)
+                                $('#process').attr('disabled', false)
+                            },
+                            error: function (xhr, status, error) {
+                                $("#wait").text("")
+                                alert(error)
+                            }
+                        });
+                    }
+
+                    accpet({ accepted: true })
+                } else {
+                    $('#process').attr('disabled', true)
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

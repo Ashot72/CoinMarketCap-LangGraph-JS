@@ -3,7 +3,7 @@ I have built an application where you can ask questions about cryptocurrencies t
 
 [LangGraph.js](https://langchain-ai.github.io/langgraphjs/) is a library for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows. Compared to other LLM frameworks, it offers these core benefits; cycles, controllability, and persistence.
 
-![graph image](https://github.com/Ashot72/CoinMarketCap-LangGraph-JS/public/CoinMarketCap_graph.png)
+![graph image](https://github.com/Ashot72/CoinMarketCap-LangGraph-JS/tree/main/public/CoinMarketCap_graph.png)
 
 In this app, we created a LangGraph workflow using built-in and custom tools integrated with the [CoinMarketCap API](https://coinmarketcap.com/api/documentation/v1/#section/Authentication/). We defined our own states with the MessageAnnotation. The workflow is dynamically interrupted, as the app follows a human-in-the-loop (HITL) approach, requiring human intervention before proceeding with certain tasks.
 
@@ -29,4 +29,4 @@ To get started.
 
 Go to [CoinMarketCap LangGraph JS Video](https://youtu.be/faosBOaERnU) page
 
-Go to [CoinMarketCap LangGraph JS Description](https://github.com/Ashot72/CoinMarketCap-LangGraph-JS/doc.html) page
+Go to [CoinMarketCap LangGraph JS Description](https://ashot72.github.io/CoinMarketCap-LangGraph-JS/doc.html) page

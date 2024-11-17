@@ -20,7 +20,6 @@ app.get('/', (req, res) => {
 app.post("/api/stream", (req, res) => {
     const data = req.body;
     const { json } = data
-    console.log(json)
 
     res.writeHead(404, { "Content-Type": "text/plain" });
     res.write(json);
@@ -28,11 +27,8 @@ app.post("/api/stream", (req, res) => {
 })
 
 app.post("/api/accept", async (req, res) => {
-
     const config = { configurable: { thread_id } }
-
     await graph.updateState(config, { purchaseConfirmed: true })
-
     const stream = await graph.stream(null, config)
 
     let answer

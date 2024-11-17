@@ -25,7 +25,6 @@ app.post("/api/stream", (req, res) => {
     res.writeHead(404, { "Content-Type": "text/plain" });
     res.write(json);
     res.end();
-    return;
 })
 
 app.post("/api/accept", async (req, res) => {
@@ -87,10 +86,6 @@ app.post("/api/query", async (req, res) => {
     const config = { configurable: { thread_id } }
 
     const stream = await graph.stream({ messages: [inputs] }, config)
-
-    const state4 = await graph.getState(config);
-    console.log("next", state4.next);
-    console.log("values", state4.values);
 
     let answer
     let interrupts = false
